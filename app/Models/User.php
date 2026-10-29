@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,37 +10,37 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    // テーブル名と主キーの明示
+    protected $table = 'users';
+    protected $primaryKey = 'user_id';
+
+    // 一括保存可能なカラム
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'user_name',
+        'user_email',
+        'user_password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    // 非表示カラム
     protected $hidden = [
-        'password',
+        'user_password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    // パスワード自動ハッシュ化の設定（Laravel 11）
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'user_password' => 'hashed',
         ];
+    }
+
+    /**
+     * Laravel標準の認証処理（Auth::attemptなど）で
+     * パスワードカラムとして user_password を使うための指定
+     */
+    public function getAuthPasswordName()
+    {
+        return 'user_password';
     }
 }
