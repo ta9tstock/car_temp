@@ -30,7 +30,7 @@ Route::post('/logout', [PageController::class, 'logout'])->name('logout');
 
 // ログイン必須画面
 Route::middleware([CheckAuth::class])->group(function () {
-    Route::redirect('/', '/dselection');
+    //Route::redirect('/', '/dselection');  // デバイス選択画面へリダイレクト
 
     Route::get('/dselection', [PageController::class, 'dselection'])->name('dselection');
     Route::get('/dtop', [PageController::class, 'dtop'])->name('dtop');
