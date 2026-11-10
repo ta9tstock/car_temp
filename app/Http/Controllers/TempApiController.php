@@ -27,6 +27,7 @@ class TempApiController extends Controller
             'humidity'  => 'nullable|numeric|between:0,100',
             'solar'     => 'nullable|integer',
             'get_time'  => 'nullable|date',
+            'send_time' => 'nullable|date',
         ]);
 
         if ($validator->fails()) {
@@ -44,7 +45,7 @@ class TempApiController extends Controller
             'humidity'  => $request->humidity,
             'solar'     => $request->solar,
             'get_time'  => $request->get_time,
-            'send_time' => now(),
+            'send_time' => $request->send_time,
         ]);
 
         return response()->json([
