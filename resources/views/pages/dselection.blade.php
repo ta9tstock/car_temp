@@ -6,13 +6,20 @@
 </head>
 <body>
     <h1>デバイス選択画面 (dselection)</h1>
-    
-    <!-- 選択したとしてデバイスTOPへ -->
-    <p><a href="{{ route('dtop') }}">デバイス1を選択してTOPへ</a></p>
+
+    <!-- POST送信で look_device を指定してデバイス切り替え -->
+    <form action="{{ route('select.device') }}" method="POST">
+        @csrf
+        <label for="look_device">デバイス番号を選択/入力:</label>
+        <input type="number" name="look_device" value="1" required>
+        <button type="submit">このデバイスを選択してTOPへ</button>
+    </form>
+
     <hr>
-    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-    @csrf
-    <button type="submit" onclick="return confirm('ログアウトしますか？')">ログアウト</button>
-</form>
+
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit">ログアウト</button>
+    </form>
 </body>
 </html>

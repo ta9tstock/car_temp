@@ -30,12 +30,20 @@ Route::post('/logout', [PageController::class, 'logout'])->name('logout');
 
 // ログイン必須画面
 Route::middleware([CheckAuth::class])->group(function () {
-    Route::redirect('/', '/dselection');  // デバイス選択画面へリダイレクト
+    Route::redirect('/', '/dselection');
+
+    // デバイス選択 (POST: look_device)
+    Route::post('/select-device', [PageController::class, 'selectDevice'])->name('select.device');
 
     Route::get('/dselection', [PageController::class, 'dselection'])->name('dselection');
     Route::get('/dtop', [PageController::class, 'dtop'])->name('dtop');
     Route::get('/dprediction', [PageController::class, 'dprediction'])->name('dprediction');
+
+    // 快適温度設定 CRUD ルート
     Route::get('/dsetting', [PageController::class, 'dsetting'])->name('dsetting');
+    Route::post('/temp-settings', [PageController::class, 'storeTempSetting'])->name('temp_settings.store');
+    Route::put('/temp-settings/{id}', [PageController::class, 'updateTempSetting'])->name('temp_settings.update');
+    Route::delete('/temp-settings/{id}', [PageController::class, 'destroyTempSetting'])->name('temp_settings.destroy');
 });
 
 // ラズパイデータ受信用 API エンドポイント
